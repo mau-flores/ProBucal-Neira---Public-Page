@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Servicios | Probucal Neira</title>
+    <link rel="stylesheet" href="../../css/decode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="header"></div>
+
+    <main class="container">
+      <h1 class="titulo-seccion">Nuestros Servicios</h1>
+      <section class="grid-3">
+        <div class="card">
+          <img src="../../img/servicio1.jpeg" alt="Limpieza dental" />
+          <h2>Limpieza Dental</h2>
+          <p>
+            Eliminación de placa y sarro para mantener una boca sana y prevenir
+            enfermedades.
+          </p>
+        </div>
+        <div class="card">
+          <img src="../../img/servicio2.jpeg" alt="Ortodoncia" />
+          <h2>Ortodoncia</h2>
+          <p>
+            Corrección de la posición de los dientes y la mordida con
+            tratamientos modernos.
+          </p>
+        </div>
+        <div class="card">
+          <img src="../../img/servicio3.jpeg" alt="Blanqueamiento" />
+          <h2>Blanqueamiento Dental</h2>
+          <p>
+            Mejora la apariencia de tu sonrisa con procedimientos seguros y
+            efectivos.
+          </p>
+        </div>
+      </section>
+
+      <section class="grid-3">
+        <div class="card">
+          <img src="../../img/servicio4.jpeg" alt="Implantes dentales" />
+          <h2>Implantes Dentales</h2>
+          <p>
+            Soluciones permanentes para reemplazar dientes perdidos y recuperar
+            la funcionalidad.
+          </p>
+        </div>
+        <div class="card">
+          <img src="../../img/servicio5.jpeg" alt="Odontopediatría" />
+          <h2>Odontopediatría</h2>
+          <p>
+            Atención especializada para los más pequeños, cuidando su salud
+            bucal desde temprana edad.
+          </p>
+        </div>
+        <div class="card">
+          <img src="../../img/servicio6.jpeg" alt="Endodoncia" />
+          <h2>Endodoncia</h2>
+          <p>
+            Tratamientos de conducto para salvar dientes dañados y aliviar el
+            dolor.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+      fetch("../components/header.html")
+        .then((res) => res.text())
+        .then((data) => (document.getElementById("header").innerHTML = data));
+
+      fetch("../components/footer.html")
+        .then((res) => res.text())
+        .then((data) => (document.getElementById("footer").innerHTML = data));
+    </script>
+  </body>
+</html>
