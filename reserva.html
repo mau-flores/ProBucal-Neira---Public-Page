@@ -5,44 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reserva de Citas</title>
     <link rel="stylesheet" href="css/reserva.css" />
-    <style>
-      .dni-container {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-      .dni-input {
-        flex: 1;
-        padding: 8px;
-        font-size: 16px;
-      }
-      .btn-consultar {
-        padding: 8px 20px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        min-width: 100px;
-      }
-      .btn-consultar:hover {
-        background-color: #45a049;
-      }
-      input:disabled {
-        background-color: #f5f5f5;
-        color: #666;
-        cursor: not-allowed;
-      }
-      .full-width {
-        grid-column: 1 / -1;
-      }
-    </style>
   </head>
   <body>
     <div class="container">
-      <h2>Reserva de citas</h2>
-      <h3>Solo reserva con DNI</h3>
+      <header class="header">
+        <h2>Reserva de Citas</h2>
+        <p>Solo reserva con tu DNI</p>
+      </header>
+
       <form>
         <div class="form-grid">
           <div class="form-group full-width">
@@ -55,7 +25,7 @@
                 maxlength="8"
                 class="dni-input"
               />
-              <button type="button" id="btnConsultarDni" class="btn-consultar">
+              <button type="button" id="btnConsultarDni" class="btn btn-consultar">
                 Buscar
               </button>
             </div>
@@ -70,6 +40,7 @@
               disabled
             />
           </div>
+
           <div class="form-group">
             <label for="apellidos">Apellidos</label>
             <input
@@ -79,6 +50,7 @@
               disabled
             />
           </div>
+
           <div class="form-group">
             <label for="telefono">Teléfono</label>
             <input type="tel" id="telefono" placeholder="Ej: 999888777" />
@@ -88,6 +60,7 @@
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" />
           </div>
+
           <div class="form-group">
             <label for="hora">Hora</label>
             <select id="hora">
@@ -103,6 +76,7 @@
               <option value="18:00">6:00 pm</option>
             </select>
           </div>
+
           <div class="form-group">
             <label for="motivo">Motivo</label>
             <select id="motivo">
@@ -112,16 +86,14 @@
               <option>Emergencia</option>
             </select>
           </div>
-          <div class="form-group">
+
+          <div class="form-group full-width">
             <label for="otros">Otros</label>
-            <textarea
-              id="otros"
-              placeholder="Datos que el médico debe saber"
-            ></textarea>
+            <textarea id="otros" placeholder="Datos que el médico debe saber"></textarea>
           </div>
 
           <div class="form-group full-width">
-            <label>Pago Previo S/. 5 - Vía Yape</label>
+            <label>Pago previo S/. 5 vía Yape</label>
             <input type="file" />
           </div>
         </div>
@@ -138,6 +110,7 @@
         </div>
       </form>
     </div>
+
     <script src="js/consulta-dni.js"></script>
   </body>
 </html>
