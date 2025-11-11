@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: probucal-web
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html:delegated
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+    networks:
+      - probucal-network
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    container_name: probucal-db
+    environment:
+      POSTGRES_DB: ProbucalNeiraBD
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: Dev_2025
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - probucal-network
+    restart: unless-stopped
+
+networks:
+  probucal-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
