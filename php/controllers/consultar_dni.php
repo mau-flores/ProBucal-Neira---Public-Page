@@ -1,13 +1,10 @@
 <?php
-// Habilitar reporte de errores
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Establecer cabeceras CORS si es necesario
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-// Asegurarse de que el archivo existe
 if (!file_exists(__DIR__ . '/../classes/DniAPI.php')) {
     echo json_encode(['success' => false, 'message' => 'Error: DniAPI.php no encontrado']);
     exit;
@@ -26,7 +23,6 @@ try {
     $dniAPI = new DniAPI();
     $resultado = $dniAPI->consultarDNI($dni);
 
-    // Verificar si hay error en la respuesta
     if ($resultado === false) {
         echo json_encode([
             'success' => false,
@@ -38,7 +34,6 @@ try {
 
     $datos = json_decode($resultado, true);
 
-    // Depuración de la respuesta
     if (json_last_error() !== JSON_ERROR_NONE) {
         echo json_encode([
             'success' => false,
