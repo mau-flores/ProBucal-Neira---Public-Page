@@ -8,117 +8,53 @@
   </head>
   <body>
     <div class="container">
-      <header class="header">
-        <h2>Reserva de Citas</h2>
-        <p>Solo reserva con tu DNI</p>
-      </header>
-
+      <h2>Reserva de citas</h2>
       <form>
         <div class="form-grid">
-          <div class="form-group full-width">
-            <label for="dni">DNI</label>
-            <div class="dni-container">
-              <input
-                type="text"
-                id="dni"
-                placeholder="Ingrese su DNI"
-                maxlength="8"
-                class="dni-input"
-              />
-              <button
-                type="button"
-                id="btnConsultarDni"
-                class="btn btn-consultar"
-              >
-                Buscar
-              </button>
-            </div>
+          <div
+            class="form-group full-width"
+            style="display: flex; align-items: center; gap: 10px"
+          >
+            <label for="dni" style="min-width: 60px">DNI</label>
+            <input
+              type="text"
+              id="dni"
+              placeholder="DNI"
+              style="flex: 1; min-width: 0"
+            />
+            <button type="button" id="btnBuscarDNI" class="btn btn-submit">
+              Buscar
+            </button>
           </div>
-
           <div class="form-group">
             <label for="nombres">Nombres</label>
-            <input
-              type="text"
-              id="nombres"
-              placeholder="Se completará automáticamente"
-              disabled
-            />
+            <input type="text" id="nombres" placeholder="Nombres" />
           </div>
-
           <div class="form-group">
             <label for="apellidos">Apellidos</label>
-            <input
-              type="text"
-              id="apellidos"
-              placeholder="Se completará automáticamente"
-              disabled
-            />
+            <input type="text" id="apellidos" placeholder="Apellidos" />
           </div>
-
-          <div class="form-group">
-            <label for="telefono">Teléfono</label>
-            <input type="tel" id="telefono" placeholder="Ej: 999888777" />
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="correo@ejemplo.com" />
-          </div>
-
-          <div class="form-group">
-            <label for="edad">Edad</label>
-            <input type="number" id="edad" placeholder="Edad" min="0" />
-          </div>
-
-          <div class="form-group">
-            <label for="id_tratamiento">Tratamiento</label>
-            <select id="id_tratamiento">
-              <option value="" disabled selected>Cargando...</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="id_odontologo">Odontólogo</label>
-            <select id="id_odontologo">
-              <option value="" disabled selected>Cargando...</option>
-            </select>
-          </div>
-
           <div class="form-group">
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" />
           </div>
-
           <div class="form-group">
-            <label for="hora">Hora</label>
-            <select id="hora">
-              <option value="" disabled selected>Seleccione</option>
-              <option value="10:00">10:00 am</option>
-              <option value="11:00">11:00 am</option>
-              <option value="12:00">12:00 pm</option>
-              <option value="13:00">1:00 pm</option>
-              <option value="14:00">2:00 pm</option>
-              <option value="15:00">3:00 pm</option>
-              <option value="16:00">4:00 pm</option>
-              <option value="17:00">5:00 pm</option>
-              <option value="18:00">6:00 pm</option>
+            <label for="motivo">Motivo</label>
+            <select id="motivo">
+              <option disabled selected>Seleccione</option>
+              <option>Consulta general</option>
+              <option>Control</option>
+              <option>Emergencia</option>
             </select>
           </div>
-
           <div class="form-group full-width">
-            <label for="otros">Otros</label>
+            <label for="otros">Datos adicionales</label>
             <textarea
               id="otros"
               placeholder="Datos que el médico debe saber"
             ></textarea>
           </div>
-
-          <div class="form-group full-width">
-            <label>Pago previo S/. 5 vía Yape</label>
-            <input type="file" />
-          </div>
         </div>
-
         <div class="actions">
           <button
             type="button"
@@ -131,7 +67,91 @@
         </div>
       </form>
     </div>
+    <!-- ===================================================== -->
+    <!--  SCRIPT PARA BUSCAR DNI Y AUTOCOMPLETAR DATOS         -->
+    <!-- ===================================================== -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const inputDni = document.getElementById("dni");
+        const inputNombres = document.getElementById("nombres");
+        const inputApellidos = document.getElementById("apellidos");
+        const btnBuscarDNI = document.getElementById("btnBuscarDNI");
 
-    <script src="js/consulta-dni.js"></script>
+        const TOKEN =
+          "6414ef08e394bb632202d712779a396607336e19c626dec3dcc085cc86340053";
+
+        btnBuscarDNI.addEventListener("click", async () => {
+          const dni = inputDni.value.trim();
+
+          if (dni.length !== 8 || !/^\d+$/.test(dni)) {
+            alert("Ingrese un DNI válido de 8 dígitos.");
+            return;
+          }
+
+          btnBuscarDNI.textContent = "Buscando...";
+          btnBuscarDNI.disabled = true;
+
+          try {
+            const res = await fetch("https://apiperu.dev/api/dni", {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + TOKEN,
+              },
+              body: JSON.stringify({ dni }),
+            });
+
+            const data = await res.json();
+
+            if (!data.success) {
+              alert("No se encontró información para este DNI.");
+              return;
+            }
+
+            // Rellenar campos con los datos obtenidos
+            inputNombres.value = data.data.nombres ?? "";
+            inputApellidos.value = `${data.data.apellido_paterno ?? ""} ${
+              data.data.apellido_materno ?? ""
+            }`.trim();
+          } catch (error) {
+            console.error("Error consultando la API:", error);
+            alert("Error al consultar el DNI.");
+          } finally {
+            btnBuscarDNI.textContent = "Buscar";
+            btnBuscarDNI.disabled = false;
+          }
+        });
+      });
+    </script>
+    <script>
+      document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const datos = {
+          dni: document.getElementById("dni").value.trim(),
+          nombres: document.getElementById("nombres").value.trim(),
+          apellidos: document.getElementById("apellidos").value.trim(),
+          fecha: document.getElementById("fecha").value,
+          motivo: document.getElementById("motivo").value,
+          otros: document.getElementById("otros").value.trim(),
+        };
+
+        const res = await fetch("php/guardar_reserva.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          alert("Reserva registrada correctamente");
+          window.location.href = "index.html";
+        } else {
+          alert("Error: " + data.error);
+        }
+      });
+    </script>
   </body>
 </html>

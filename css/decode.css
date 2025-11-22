@@ -371,3 +371,71 @@ main.container {
   margin: 10px auto 0;
   border-radius: 2px;
 }
+
+/* ==== MODAL ==== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: #fff;
+  padding: 2rem;
+  width: min(480px, 90%);
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #911d1e;
+  font-weight: bold;
+}
+
+.modal h2 {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  color: #911d1e;
+}
+
+.modal .form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.modal input:focus,
+.modal textarea:focus {
+  border-color: #911d1e;
+  outline: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+ 

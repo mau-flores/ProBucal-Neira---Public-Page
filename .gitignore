@@ -1,7 +1,0 @@
-/php/config/api_config.php
-
-# Node / OS / editor artifacts (opcional)
-.vscode/
-Thumbs.db
-desktop.ini
-.env
